@@ -1,10 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Container, Divider } from "semantic-ui-react";
+import Navbar from "./Navbar";
 function App() {
   return (
     <div className="App">
-      HelloWorld!
+      <Container fluid>
+        <Navbar />
+        <Divider />
+      </Container>
     </div>
   );
 }
