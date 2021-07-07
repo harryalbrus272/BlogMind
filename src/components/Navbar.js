@@ -20,7 +20,7 @@ const Navbar = () => {
           >
             BlogMind
           </Header>
-          <Button animated>
+          <Button animated size="large" style={{ color: "black" }}>
             <Button.Content visible>Post</Button.Content>
             <Button.Content hidden>
               <Icon name="arrow right" />
