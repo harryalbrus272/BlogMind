@@ -8,8 +8,9 @@ import { Container, Input, Grid, Button } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
 
 const CreatePosts = () => {
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  console.log({ content });
+  console.log({ content, title });
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -44,6 +45,7 @@ const CreatePosts = () => {
           fluid
           placeholder="Enter Blog Title...."
           style={{ marginBottom: "15px" }}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <MenuBar editor={editor} />
         <Grid
