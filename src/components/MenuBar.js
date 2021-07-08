@@ -81,21 +81,21 @@ const MenuBar = ({ editor }) => {
       </Button>
       <Button
         icon
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive("bulletList") ? "is-active" : ""}
-        size="mini"
-        basic
-      >
-        <Icon name="list ul" />
-      </Button>
-      <Button
-        icon
         onClick={() => editor.chain().focus().setTextAlign("center").run()}
         className={editor.isActive({ textAlign: "center" }) ? "is-active" : ""}
         size="mini"
         basic
       >
         <Icon name="align center" />
+      </Button>
+      <Button
+        icon
+        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
+        size="mini"
+        basic
+      >
+        <Icon name="align left" />
       </Button>
       <Button
         icon
@@ -117,12 +117,12 @@ const MenuBar = ({ editor }) => {
       </Button>
       <Button
         icon
-        onClick={() => editor.chain().focus().setTextAlign("left").run()}
-        className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        className={editor.isActive("bulletList") ? "is-active" : ""}
         size="mini"
         basic
       >
-        <Icon name="align left" />
+        <Icon name="list ul" />
       </Button>
       <Button
         icon
