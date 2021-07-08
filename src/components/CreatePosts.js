@@ -3,13 +3,21 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
+import TextAlign from "@tiptap/extension-text-align";
 import { Button, Icon, Container } from "semantic-ui-react";
 
 const CreatePosts = () => {
   const [state, setState] = useState("Hello World! The next is coming up");
   console.log({ state });
   const editor = useEditor({
-    extensions: [StarterKit, Highlight, Typography],
+    extensions: [
+      StarterKit,
+      Highlight,
+      Typography,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+    ],
     content: state,
     onUpdate({ editor }) {
       setState(editor.getHTML());
@@ -78,8 +86,7 @@ const CreatePosts = () => {
           size="mini"
           basic
         >
-          <Icon name="heading" />
-          1
+          <Icon name="heading" />1
         </Button>
         <Button
           icon
@@ -92,8 +99,7 @@ const CreatePosts = () => {
           size="mini"
           basic
         >
-          <Icon name="heading" />
-          2
+          <Icon name="heading" />2
         </Button>
         <Button
           icon
@@ -106,8 +112,7 @@ const CreatePosts = () => {
           size="mini"
           basic
         >
-          <Icon name="heading" />
-          3
+          <Icon name="heading" />3
         </Button>
         <Button
           icon
@@ -117,6 +122,46 @@ const CreatePosts = () => {
           basic
         >
           <Icon name="list ul" />
+        </Button>
+        <Button
+          icon
+          onClick={() => editor.chain().focus().setTextAlign("center").run()}
+          className={
+            editor.isActive({ textAlign: "center" }) ? "is-active" : ""
+          }
+          size="mini"
+          basic
+        >
+          <Icon name="align center" />
+        </Button>
+        <Button
+          icon
+          onClick={() => editor.chain().focus().setTextAlign("right").run()}
+          className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}
+          size="mini"
+          basic
+        >
+          <Icon name="align right" />
+        </Button>
+        <Button
+          icon
+          onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+          className={
+            editor.isActive({ textAlign: "justify" }) ? "is-active" : ""
+          }
+          size="mini"
+          basic
+        >
+          <Icon name="align justify" />
+        </Button>
+        <Button
+          icon
+          onClick={() => editor.chain().focus().setTextAlign("left").run()}
+          className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
+          size="mini"
+          basic
+        >
+          <Icon name="align left" />
         </Button>
         <Button
           icon
