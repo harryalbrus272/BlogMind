@@ -1,7 +1,10 @@
 import React from "react";
-import { Container, Header, Button, Icon, Divider } from "semantic-ui-react";
+import { useLocation } from "react-router-dom";
+import { Container, Header, Button, Icon } from "semantic-ui-react";
 
 const Navbar = () => {
+  let location = useLocation();
+  console.log(location.pathname);
   return (
     <div>
       <Container>
