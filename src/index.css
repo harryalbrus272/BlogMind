@@ -14,6 +14,8 @@ code {
 /* Basic editor styles */
 .ProseMirror {
   margin-top: 1rem;
+  width: 100%;
+  height: 97%;
 }
 .ProseMirror-focused {
   border: none;
