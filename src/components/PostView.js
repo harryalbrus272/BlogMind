@@ -4,7 +4,14 @@ import { connect } from "react-redux";
 import { fetchBlog } from "../actions/blogs";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Container, Header } from "semantic-ui-react";
+import {
+  Container,
+  Header,
+  Segment,
+  Image,
+  Loader,
+  Dimmer,
+} from "semantic-ui-react";
 
 const PostView = (props) => {
   console.log("props in postview", props);
@@ -15,19 +22,34 @@ const PostView = (props) => {
 
   const editor = useEditor({
     extensions: [StarterKit],
-    content: currentBlog.content,
+    content: "",
   });
 
   useEffect(() => {
     dispatch(fetchBlog(params.id));
   }, []);
 
+  useEffect(() => {
+    if (editor) editor.commands.setContent(currentBlog.content);
+  }, [currentBlog]);
+
   return (
     <div>
-      <Container>
-        <Header as="h1">{currentBlog.title}</Header>
-        <EditorContent editor={editor} />
-      </Container>
+      {blogs.inProgress && (
+        <Container fluid>
+          <Dimmer active>
+            <Loader content="Loading" />
+          </Dimmer>
+
+          <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+        </Container>
+      )}
+      {!blogs.inProgress && (
+        <Container>
+          <Header as="h1">{currentBlog.title}</Header>
+          <EditorContent editor={editor} />
+        </Container>
+      )}
     </div>
   );
 };

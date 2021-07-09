@@ -1,5 +1,5 @@
 import {
-    BLOG_LOAD_FAILED,
+  BLOG_LOAD_FAILED,
   BLOG_LOAD_START,
   BLOG_LOAD_SUCCESS,
   LIST_LOAD_FAILED,
@@ -17,7 +17,6 @@ const blogs = (state = initialBlogState, action) => {
   console.log(action);
   switch (action.type) {
     case LIST_LOAD_START:
-    case BLOG_LOAD_START:
       return {
         ...state,
         inProgress: true,
@@ -33,6 +32,12 @@ const blogs = (state = initialBlogState, action) => {
         ...state,
         inProgress: false,
         error: action.error,
+      };
+    case BLOG_LOAD_START:
+      return {
+        ...state,
+        currentBlog: {},
+        inProgress: true,
       };
     case BLOG_LOAD_SUCCESS:
       return {
