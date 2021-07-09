@@ -6,8 +6,11 @@ import Typography from "@tiptap/extension-typography";
 import TextAlign from "@tiptap/extension-text-align";
 import { Container, Input, Grid, Button } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
+import { saveBlog } from "../actions/blogs";
+import { connect } from "react-redux";
 
-const CreatePosts = () => {
+const CreatePosts = (props) => {
+  const { dispatch, blogs } = props;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   console.log({ content, title });
@@ -25,6 +28,9 @@ const CreatePosts = () => {
       setContent(editor.getHTML());
     },
   });
+  const handleSubmit = () => {
+    dispatch(saveBlog(title, content));
+  };
 
   const handleReset = (e) => {
     editor.commands.setContent("");
@@ -69,11 +75,17 @@ const CreatePosts = () => {
         <Button.Group>
           <Button onClick={(e) => handleReset(e)}>Reset</Button>
           <Button.Or />
-          <Button positive>Create Post</Button>
+          <Button positive onClick={(e) => handleSubmit(e)}>
+            Create Post
+          </Button>
         </Button.Group>
       </Container>
     </div>
   );
 };
 
-export default CreatePosts;
+function mapStateToProps(state) {
+  return { ...state };
+}
+
+export default connect(mapStateToProps)(CreatePosts);

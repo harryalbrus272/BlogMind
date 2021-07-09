@@ -86,3 +86,42 @@ export function fetchBlog(id) {
       });
   };
 }
+
+export function saveBlogStart() {
+  return {
+    type: BLOG_LOAD_START,
+  };
+}
+
+export function saveBlogSuccess(blog) {
+  return {
+    type: BLOG_LOAD_SUCCESS,
+    blog,
+  };
+}
+
+export function saveBlogFailed(errorMessage) {
+  return {
+    type: BLOG_LOAD_FAILED,
+    error: errorMessage,
+  };
+}
+
+export function saveBlog( title, content ) {
+    return async (dispatch) => {
+        const url = APIUrls.save();
+        dispatch(saveBlogStart());  
+        await axios
+          .post(url)
+          .then((res) => {
+            const { message, result, success } = res.data;
+            console.log(res.result);
+            if (success) {
+              dispatch(fetchBlogSuccess(result));
+            }
+          })
+          .catch((err) => {
+            dispatch(fetchBlogFailed(err.response.data.message));
+          });
+      };
+}

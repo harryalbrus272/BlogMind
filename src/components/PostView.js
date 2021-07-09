@@ -14,15 +14,14 @@ import {
 } from "semantic-ui-react";
 
 const PostView = (props) => {
-  console.log("props in postview", props);
   const { dispatch, blogs } = props;
   const currentBlog = blogs.currentBlog;
   const { params } = props.match;
-  console.log(params);
 
   const editor = useEditor({
     extensions: [StarterKit],
     content: "",
+    editable: false,
   });
 
   useEffect(() => {
