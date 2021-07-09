@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import { Container, Header, Button, Icon } from "semantic-ui-react";
 
 const Navbar = (props) => {
-  console.log('props in navbar', props);
+  console.log("props in navbar", props);
   let location = useLocation();
   console.log(location.pathname);
   return (
@@ -16,14 +16,17 @@ const Navbar = (props) => {
             paddingTop: "14px",
           }}
         >
-          <Header
-            as="h1"
-            style={{
-              margin: "0px",
-            }}
-          >
-            BlogMind
-          </Header>
+          <Link to="/">
+            <Header
+              as="h1"
+              style={{
+                margin: "0px",
+              }}
+            >
+              BlogMind
+            </Header>
+          </Link>
+
           {location.pathname !== "/create" ? (
             <Link to="/create">
               <Button animated size="large" style={{ color: "black" }}>
