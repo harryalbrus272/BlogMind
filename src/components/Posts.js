@@ -14,9 +14,16 @@ const Posts = ({ blog }) => {
       <Container>
         <Segment>
           <Header>{blog.title}</Header>
-          <p>
+          <div
+            style={{
+              maxHeight: "50px",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
+          >
             <EditorContent editor={editor} />
-          </p>
+          </div>
           <Link to={`/blog/${blog._id}`}>
             <Button size="medium" style={{ color: "black" }}>
               READ MORE
