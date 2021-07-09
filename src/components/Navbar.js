@@ -1,8 +1,9 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Container, Header, Button, Icon } from "semantic-ui-react";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  console.log('props in navbar', props);
   let location = useLocation();
   console.log(location.pathname);
   return (
@@ -23,12 +24,25 @@ const Navbar = () => {
           >
             BlogMind
           </Header>
-          <Button animated size="large" style={{ color: "black" }}>
-            <Button.Content visible>Post</Button.Content>
-            <Button.Content hidden>
-              <Icon name="arrow right" />
-            </Button.Content>
-          </Button>
+          {location.pathname !== "/create" ? (
+            <Link to="/create">
+              <Button animated size="large" style={{ color: "black" }}>
+                <Button.Content visible>Post</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="arrow right" />
+                </Button.Content>
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/">
+              <Button animated size="large" style={{ color: "black" }}>
+                <Button.Content visible>Back</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="arrow left" />
+                </Button.Content>
+              </Button>
+            </Link>
+          )}
         </div>
       </Container>
     </div>

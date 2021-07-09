@@ -1,19 +1,27 @@
 import React from "react";
 import { Segment, Container, Header, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
-const Posts = () => {
+const Posts = ({ blog }) => {
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: blog.content,
+  });
   return (
     <div>
       <Container>
         <Segment>
-          <Header>DigitalStory Telling in Today's World</Header>
+          <Header>{blog.title}</Header>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus dolor
-            nulla quasi cum in officiis laboriosam neque ducimus quo accusamus
-            veritatis soluta deserunt fuga asperiores accusantium dignissimos
-            facere, numquam quaerat.
+            <EditorContent editor={editor} />
           </p>
-          <Button size='medium' style={{ color: "black" }}>READ MORE</Button>
+          <Link to={`/blog/${blog._id}`}>
+            <Button size="medium" style={{ color: "black" }}>
+              READ MORE
+            </Button>
+          </Link>
         </Segment>
       </Container>
     </div>
