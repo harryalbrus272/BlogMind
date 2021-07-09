@@ -36,7 +36,6 @@ export function fetchBlogList() {
     await axios
       .get(url)
       .then((res) => {
-        console.log(res);
         const { blogs, success } = res.data;
         if (success) {
           dispatch(fetchBlogListSuccess(blogs));
@@ -76,10 +75,10 @@ export function fetchBlogStart() {
       await axios
         .get(url)
         .then((res) => {
-          console.log(res);
-          const { blogs, success } = res.data;
+            const {message, result, success} = res.data;
+          console.log(res.result);
           if (success) {
-            dispatch(fetchBlogSuccess(blogs));
+            dispatch(fetchBlogSuccess(result));
           }
         })
         .catch((err) => {
