@@ -27,8 +27,10 @@ const CreatePosts = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [editorEditable, setEditorEditable] = useState(true);
   const [confirmModal, setConfirmModal] = useState(false);
-  const [message, setMessage] = useState("");
-  console.log({ content, title });
+  const [message, setMessage] = useState("Title is a required field");
+  const [isContentEmpty, setIsContentEmpty] = useState(false);
+  const [isTitleEmpty, setIsTitleEmpty] = useState(false);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -46,11 +48,25 @@ const CreatePosts = (props) => {
   });
 
   const openConfirmModal = () => {
+    console.log(content, title);
+
+    if (content === "") {
+      setMessage("Content is a required field");
+      setIsContentEmpty(true);
+      setTimeout(() => {
+        setIsContentEmpty(false);
+      }, 1000);
+    }
     if (title === "") {
-      setMessage("Title is required field");
-    } else if (content === "") {
-      setMessage("Content is required field");
-    } else if (title !== "" && content !== "") {
+      setMessage("Title is a required field");
+      setIsTitleEmpty(true);
+      setTimeout(() => {
+        setIsTitleEmpty(false);
+      }, 1000);
+    }
+    if (title !== "" && content !== "") {
+      setIsContentEmpty(false);
+      setIsTitleEmpty(false);
       setMessage("");
       setConfirmModal(true);
     }
@@ -100,6 +116,7 @@ const CreatePosts = (props) => {
           placeholder="Enter Blog Title...."
           style={{ marginBottom: "15px" }}
           onChange={(e) => setTitle(e.target.value)}
+          className={isTitleEmpty ? "red-border" : ""}
         />
         <MenuBar editor={editor} />
         <Grid
@@ -110,7 +127,7 @@ const CreatePosts = (props) => {
             border: "1px solid rgba(34,36,38,.15)",
             borderRadius: ".28571429rem",
           }}
-        >
+          >
           <EditorContent
             editor={editor}
             style={{
@@ -118,6 +135,7 @@ const CreatePosts = (props) => {
               width: "100%",
               caretColor: "red",
             }}
+            className={isContentEmpty ? "red-border" : ""}
           />
         </Grid>
         {!blogs.postSave.started && !blogs.postSave.finished ? (
@@ -127,7 +145,7 @@ const CreatePosts = (props) => {
             {message !== "" ? (
               <Popup
                 content={message}
-                on='hover click'
+                on="click"
                 pinned
                 trigger={
                   <Button
