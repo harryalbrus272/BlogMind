@@ -14,6 +14,7 @@ import {
   Dimmer,
   Loader,
   Confirm,
+  Popup,
 } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
 import { saveBlog } from "../actions/blogs";
@@ -26,6 +27,7 @@ const CreatePosts = (props) => {
   const [redirect, setRedirect] = useState(false);
   const [editorEditable, setEditorEditable] = useState(true);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [message, setMessage] = useState("");
   console.log({ content, title });
   const editor = useEditor({
     extensions: [
@@ -44,11 +46,17 @@ const CreatePosts = (props) => {
   });
 
   const openConfirmModal = () => {
-    setConfirmModal(true);
+    if (title === "") {
+      setMessage("Title is required field");
+    } else if (content === "") {
+      setMessage("Content is required field");
+    } else if (title !== "" && content !== "") {
+      setMessage("");
+      setConfirmModal(true);
+    }
   };
 
   const handleSubmit = (e) => {
-    console.log(title !== "" && content !== "");
     if (title && content) {
       dispatch(saveBlog(title, content));
       setEditorEditable(false);
@@ -116,13 +124,30 @@ const CreatePosts = (props) => {
           <Button.Group>
             <Button onClick={(e) => handleReset(e)}>Reset</Button>
             <Button.Or />
-            <Button
-              positive
-              onClick={(e) => openConfirmModal(e)}
-              disabled={blogs.inProgress}
-            >
-              Create Post
-            </Button>
+            {message !== "" ? (
+              <Popup
+                content={message}
+                on='hover click'
+                pinned
+                trigger={
+                  <Button
+                    positive
+                    onClick={(e) => openConfirmModal(e)}
+                    disabled={blogs.inProgress}
+                  >
+                    Create Post
+                  </Button>
+                }
+              />
+            ) : (
+              <Button
+                positive
+                onClick={(e) => openConfirmModal(e)}
+                disabled={blogs.inProgress}
+              >
+                Create Post
+              </Button>
+            )}
             <Confirm
               open={confirmModal}
               onCancel={() => setConfirmModal(false)}
