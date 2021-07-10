@@ -51,12 +51,6 @@ const CreatePosts = (props) => {
     },
   });
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearErrorState());
-    };
-  }, []);
-
   const openConfirmModal = () => {
 
     if (content === "") {
