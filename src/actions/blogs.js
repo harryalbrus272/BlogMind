@@ -14,12 +14,14 @@ import {
   LIST_LOAD_START,
   LIST_LOAD_SUCCESS,
 } from "./actionTypes";
+//Fetching the list of blogs
 export function fetchBlogListStart() {
   return {
     type: LIST_LOAD_START,
   };
 }
 
+//Action if the fetching blogs list is successful
 export function fetchBlogListSuccess(blogs) {
   return {
     type: LIST_LOAD_SUCCESS,
@@ -27,6 +29,7 @@ export function fetchBlogListSuccess(blogs) {
   };
 }
 
+//Action if the fetching blogs list is failed
 export function fetchBlogListFailed(errorMessage) {
   return {
     type: LIST_LOAD_FAILED,
@@ -34,6 +37,7 @@ export function fetchBlogListFailed(errorMessage) {
   };
 }
 
+//Fetching action to call the api and load the results - for fetching the list of blogs
 export function fetchBlogList() {
   return async (dispatch) => {
     const url = APIUrls.list();
@@ -53,12 +57,14 @@ export function fetchBlogList() {
   };
 }
 
+//Fetching the particular blog
 export function fetchBlogStart() {
   return {
     type: BLOG_LOAD_START,
   };
 }
 
+//Action if the fetching the particular blog is successful
 export function fetchBlogSuccess(blog) {
   return {
     type: BLOG_LOAD_SUCCESS,
@@ -66,6 +72,7 @@ export function fetchBlogSuccess(blog) {
   };
 }
 
+//Action if the fetching the particular blog is failed
 export function fetchBlogFailed(errorMessage) {
   return {
     type: BLOG_LOAD_FAILED,
@@ -73,6 +80,8 @@ export function fetchBlogFailed(errorMessage) {
   };
 }
 
+//Action if the fetching the particular blog is failed
+//Fetching action to call the api and load the results - for fetching the full blog details
 export function fetchBlog(id) {
   return async (dispatch) => {
     const url = APIUrls.blog(id);
@@ -92,12 +101,14 @@ export function fetchBlog(id) {
   };
 }
 
+//Saving the particular blog
 export function saveBlogStart() {
   return {
     type: CREATE_POST_START,
   };
 }
 
+//Action if the saving the blog is successful
 export function saveBlogSuccess(blog) {
   return {
     type: CREATE_POST_SUCCESS,
@@ -105,6 +116,7 @@ export function saveBlogSuccess(blog) {
   };
 }
 
+//Action if the saving the particular blog is failed
 export function saveBlogFailed(errorMessage) {
   return {
     type: CREATE_POST_FAILED,
@@ -112,35 +124,38 @@ export function saveBlogFailed(errorMessage) {
   };
 }
 
+//Saving action to call the api and save the result - for saving the blog
 export function saveBlog(title, content) {
-    const config = {
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-    };
-    return async (dispatch) => {
-        const url = APIUrls.save();
-        dispatch(saveBlogStart());
+  const config = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  };
+  return async (dispatch) => {
+    const url = APIUrls.save();
+    dispatch(saveBlogStart());
     await axios
-    .post(url, getFormBody({ title, content }), config)
-    .then((res) => {
+      .post(url, getFormBody({ title, content }), config)
+      .then((res) => {
         const { message, result, success } = res.data;
         if (success) {
-            dispatch(saveBlogSuccess(result));
+          dispatch(saveBlogSuccess(result));
         }
-    })
+      })
       .catch((err) => {
-          dispatch(saveBlogFailed(err.response.data.message));
-        });
-    };
+        dispatch(saveBlogFailed(err.response.data.message));
+      });
+  };
 }
 
+//Clearing error state otherwise it will render error messages at wrong components
 export function clearErrorState() {
   return {
     type: CLEAR_ERROR_STATE,
   };
 }
 
+//Clearing save state otherwise it will render different layout at the create post components
 export function clearPostSaveState() {
   return {
     type: CLEAR_POST_SAVE,

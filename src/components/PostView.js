@@ -15,12 +15,14 @@ const PostView = (props) => {
   const { params } = props.match;
 
   useEffect(() => {
+    //Checking if the currentBlog has the same blog to avoid more number of request to be made to the server
     if (currentBlog._id) {
       if (currentBlog._id !== params.id) dispatch(fetchBlog(params.id));
     } else {
       dispatch(fetchBlog(params.id));
     }
 
+    //Cleanup function
     return () => {
       dispatch(clearErrorState());
       dispatch(clearPostSaveState());

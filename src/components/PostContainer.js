@@ -7,6 +7,7 @@ import { clearErrorState, clearPostSaveState } from "../actions/blogs";
 const PostContainer = (props) => {
   const { dispatch, blogs } = props;
   const { list } = props.blogs;
+  //Clearing error and postsave state to avoid incorrect message to be seen
   useEffect(() => {
     //Clearing all states on redirect
     dispatch(clearErrorState());

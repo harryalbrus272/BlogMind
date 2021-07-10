@@ -12,6 +12,7 @@ import {
   LIST_LOAD_SUCCESS,
 } from "../actions/actionTypes";
 
+//Initial state determines the redux state and their initial values
 const initialBlogState = {
   list: [],
   currentBlog: {},
@@ -20,10 +21,11 @@ const initialBlogState = {
   postSave: {
     started: false,
     finished: false,
-    progress: 0,
   },
 };
+
 const blogs = (state = initialBlogState, action) => {
+  //using switch case the check the action.type and doing the operation on the basis of that
   switch (action.type) {
     case LIST_LOAD_START:
       return {

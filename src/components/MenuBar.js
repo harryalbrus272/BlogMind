@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Icon } from "semantic-ui-react";
 
 const MenuBar = ({ editor }) => {
+  //This component is the buttons for the create post editor window.
   if (!editor) {
     return null;
   }

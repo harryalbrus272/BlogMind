@@ -10,6 +10,7 @@ import { fetchBlogList } from "../actions/blogs";
 
 function App(props) {
   const { dispatch, blogs } = props;
+  //Fetching the blog list on the loading of the parent component
   useEffect(() => {
     dispatch(fetchBlogList());
   }, []);

@@ -3,6 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import { Container, Header, Button, Icon } from "semantic-ui-react";
 
 const Navbar = (props) => {
+  //Location instance to switch between the post and back button
   let location = useLocation();
   return (
     <div>

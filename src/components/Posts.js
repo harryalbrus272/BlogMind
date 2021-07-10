@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 
 const Posts = ({ blog }) => {
+  //Rendering a single blog instance
   return (
     <div>
       <Container>

@@ -19,9 +19,8 @@ import {
   Progress,
 } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
-import { clearErrorState, saveBlog } from "../actions/blogs";
+import { saveBlog } from "../actions/blogs";
 import { connect } from "react-redux";
-import { useEffect } from "react";
 
 const CreatePosts = (props) => {
   const { dispatch, blogs } = props;
@@ -35,6 +34,7 @@ const CreatePosts = (props) => {
   const [isTitleEmpty, setIsTitleEmpty] = useState(false);
   const [percent, setPercent] = useState(0);
 
+  //Editor instance initialized with the update function to render again when the change is made by the user
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -51,8 +51,8 @@ const CreatePosts = (props) => {
     },
   });
 
+  //Open Modal to Confirm if the post is correct or not
   const openConfirmModal = () => {
-
     if (content === "") {
       setMessage("Content is a required field");
       setIsContentEmpty(true);
@@ -75,6 +75,7 @@ const CreatePosts = (props) => {
     }
   };
 
+  //Handling the confirmation of the Blog that is to be posted
   const handleSubmit = (e) => {
     if (title && content) {
       dispatch(saveBlog(title, content));
@@ -82,12 +83,14 @@ const CreatePosts = (props) => {
     }
   };
 
+  //Resetting the whole text editor
   const handleReset = (e) => {
     editor.commands.setContent("");
     editor.commands.focus();
     setContent("");
   };
 
+  //Showing the redirect message and the green bar progress to make the point that redirect is going to happen soon
   if (blogs.postSave.started && blogs.postSave.finished) {
     setTimeout(() => {
       setRedirect(true);
@@ -96,13 +99,15 @@ const CreatePosts = (props) => {
       if (percent >= 100) {
         setPercent(100);
       } else {
-        setPercent((prev) => prev + 0.7);
+        setPercent((prev) => prev + 0.67);
       }
     }, 10);
   }
 
+  //Redirect if the redirect state is true
   if (redirect) return <Redirect to="/" />;
 
+  //If the progress is happening, then return the loader action
   if (blogs.inProgress)
     return (
       <Container>

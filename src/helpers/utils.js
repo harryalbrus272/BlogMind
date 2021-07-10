@@ -1,3 +1,4 @@
+//function to covert the params to URI encoded format to send via post request
 export function getFormBody(params) {
   let formBody = [];
   for (let property in params) {
