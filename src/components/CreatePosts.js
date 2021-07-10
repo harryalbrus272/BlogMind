@@ -4,7 +4,16 @@ import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
 import TextAlign from "@tiptap/extension-text-align";
-import { Container, Input, Grid, Button } from "semantic-ui-react";
+import {Redirect} from 'react-router-dom'
+import {
+  Container,
+  Input,
+  Grid,
+  Button,
+  Progress,
+  Dimmer,
+  Loader,
+} from "semantic-ui-react";
 import MenuBar from "./MenuBar";
 import { saveBlog } from "../actions/blogs";
 import { connect } from "react-redux";
@@ -38,6 +47,17 @@ const CreatePosts = (props) => {
     editor.commands.focus();
     setContent("");
   };
+
+  if(blogs.postSave.started && blogs.postSave.finished) return (<Redirect to="/" />);
+
+  if (blogs.inProgress)
+    return (
+      <Container>
+        <Dimmer active>
+          <Loader />
+        </Dimmer>
+      </Container>
+    );
 
   return (
     <div>

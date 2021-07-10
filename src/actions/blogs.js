@@ -112,7 +112,7 @@ export function saveBlogFailed(errorMessage) {
 }
 
 export function saveBlog(title, content) {
-  console.log('called savebLog`');
+  console.log("called savebLog`");
   const config = {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
