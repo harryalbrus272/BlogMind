@@ -28,8 +28,9 @@ const CreatePosts = (props) => {
       setContent(editor.getHTML());
     },
   });
-  const handleSubmit = () => {
-    dispatch(saveBlog(title, content));
+  const handleSubmit = (e) => {
+    console.log(title !== "" && content !== "");
+    if (title && content) dispatch(saveBlog(title, content));
   };
 
   const handleReset = (e) => {

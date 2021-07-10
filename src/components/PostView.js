@@ -7,7 +7,6 @@ import StarterKit from "@tiptap/starter-kit";
 import {
   Container,
   Header,
-  Segment,
   Image,
   Loader,
   Dimmer,

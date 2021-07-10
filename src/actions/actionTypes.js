@@ -12,3 +12,7 @@ export const BLOG_LOAD_FAILED = 'BLOG_LOAD_FAILED';
 export const CREATE_POST_START = 'CREATE_POST_START';
 export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS';
 export const CREATE_POST_FAILED = 'CREATE_POST_FAILED';
+
+//Clearing state on component unloading
+export const CLEAR_ERROR_STATE = 'CLEAR_ERROR_STATE';
+export const CLEAR_POST_SAVE = 'CLEAR_POST_SAVE';
