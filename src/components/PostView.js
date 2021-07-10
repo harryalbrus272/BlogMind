@@ -15,7 +15,8 @@ const PostView = (props) => {
   const { params } = props.match;
 
   useEffect(() => {
-    dispatch(fetchBlog(params.id));
+    if (currentBlog._id && currentBlog._id !== params.id)
+      dispatch(fetchBlog(params.id));
     return () => {
       dispatch(clearErrorState());
       dispatch(clearPostSaveState());
