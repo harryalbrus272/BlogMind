@@ -17,8 +17,9 @@ import {
   Popup,
 } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
-import { saveBlog } from "../actions/blogs";
+import { clearErrorState, saveBlog } from "../actions/blogs";
 import { connect } from "react-redux";
+import { useEffect } from "react";
 
 const CreatePosts = (props) => {
   const { dispatch, blogs } = props;
@@ -46,6 +47,12 @@ const CreatePosts = (props) => {
       setContent(editor.getHTML());
     },
   });
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearErrorState());
+    };
+  }, []);
 
   const openConfirmModal = () => {
     console.log(content, title);
@@ -104,6 +111,7 @@ const CreatePosts = (props) => {
 
   return (
     <div>
+      {blogs.error && <div className="alert error-dailog">{blogs.error}</div>}
       <Container
         style={{
           display: "flex",
@@ -127,7 +135,7 @@ const CreatePosts = (props) => {
             border: "1px solid rgba(34,36,38,.15)",
             borderRadius: ".28571429rem",
           }}
-          >
+        >
           <EditorContent
             editor={editor}
             style={{

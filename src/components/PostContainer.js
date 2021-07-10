@@ -6,7 +6,7 @@ import { clearErrorState, clearPostSaveState } from "../actions/blogs";
 
 const PostContainer = (props) => {
   console.log("props in post conatiner", props);
-  const { dispatch } = props;
+  const { dispatch, blogs } = props;
   const { list } = props.blogs;
   useEffect(() => {
     //Clearing all states on redirect
@@ -15,6 +15,7 @@ const PostContainer = (props) => {
   }, []);
   return (
     <div>
+      {blogs.error && <div className="alert error-dailog">{blogs.error}</div>}
       <Container fluid style={{ padding: "10px 0" }}>
         <Grid>
           {list.map((blog) => (
