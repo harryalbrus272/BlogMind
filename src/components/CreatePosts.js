@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
@@ -15,6 +15,7 @@ import {
   Loader,
   Confirm,
   Popup,
+  Icon,
 } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
 import { clearErrorState, saveBlog } from "../actions/blogs";
@@ -127,11 +128,50 @@ const CreatePosts = (props) => {
           className={isTitleEmpty ? "red-border" : ""}
         />
         <MenuBar editor={editor} />
+        {editor && (
+          <BubbleMenu editor={editor}>
+            <Button.Group basic size="small" style={{background: 'black'}}>
+              <Button
+                icon
+                onClick={() => editor.chain().focus().toggleBold().run()}
+                className={editor.isActive("bold") ? "is-active" : ""}
+                size="mini"
+                inverted 
+                color='blue'
+                basic
+              >
+                <Icon name="bold" />
+              </Button>
+              <Button
+                icon
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+                className={editor.isActive("italic") ? "is-active" : ""}
+                size="mini"
+                inverted 
+                color='blue'
+                basic
+              >
+                <Icon name="italic" />
+              </Button>
+              <Button
+                icon
+                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                className={editor.isActive("codeBlock") ? "is-active" : ""}
+                size="mini"
+                inverted 
+                color='blue'
+                basic
+              >
+                <Icon name="code" />
+              </Button>
+            </Button.Group>
+          </BubbleMenu>
+        )}
         <Grid
           columns={16}
           container
           style={{
-            margin: "10px 0 0 0",
+            margin: "30px 0 0 0",
             border: "1px solid rgba(34,36,38,.15)",
             borderRadius: ".28571429rem",
           }}
