@@ -1,14 +1,9 @@
 import React from "react";
 import { Segment, Container, Header, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import ReactHtmlParser from "react-html-parser";
 
 const Posts = ({ blog }) => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: blog.content,
-  });
   return (
     <div>
       <Container>
@@ -22,7 +17,7 @@ const Posts = ({ blog }) => {
               overflow: "hidden",
             }}
           >
-            <EditorContent editor={editor} />
+            <Container>{ReactHtmlParser(blog.content)}</Container>
           </div>
           <Link to={`/blog/${blog._id}`}>
             <Button size="medium" style={{ color: "black" }}>

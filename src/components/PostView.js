@@ -6,20 +6,13 @@ import {
   clearPostSaveState,
   fetchBlog,
 } from "../actions/blogs";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import ReactHtmlParser from "react-html-parser";
 import { Container, Header, Image, Loader, Dimmer } from "semantic-ui-react";
 
 const PostView = (props) => {
   const { dispatch, blogs } = props;
   const currentBlog = blogs.currentBlog;
   const { params } = props.match;
-
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: "",
-    editable: false,
-  });
 
   useEffect(() => {
     dispatch(fetchBlog(params.id));
@@ -28,10 +21,6 @@ const PostView = (props) => {
       dispatch(clearPostSaveState());
     };
   }, []);
-
-  useEffect(() => {
-    if (editor) editor.commands.setContent(currentBlog.content);
-  }, [currentBlog]);
 
   return (
     <div>
@@ -47,7 +36,7 @@ const PostView = (props) => {
       {!blogs.inProgress && (
         <Container>
           <Header as="h1">{currentBlog.title}</Header>
-          <EditorContent editor={editor} />
+          <Container>{ReactHtmlParser(currentBlog.content)}</Container>
         </Container>
       )}
     </div>
