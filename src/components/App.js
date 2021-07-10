@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { fetchBlogList } from "../actions/blogs";
 
 function App(props) {
-  console.log(props);
   const { dispatch, blogs } = props;
   useEffect(() => {
     dispatch(fetchBlogList());

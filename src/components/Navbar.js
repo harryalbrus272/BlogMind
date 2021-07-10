@@ -3,9 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import { Container, Header, Button, Icon } from "semantic-ui-react";
 
 const Navbar = (props) => {
-  console.log("props in navbar", props);
   let location = useLocation();
-  console.log(location.pathname);
   return (
     <div>
       <Container>

@@ -82,7 +82,6 @@ export function fetchBlog(id) {
       .get(url)
       .then((res) => {
         const { message, result, success } = res.data;
-        console.log(res.result);
         if (success) {
           dispatch(fetchBlogSuccess(result));
         }
@@ -114,7 +113,6 @@ export function saveBlogFailed(errorMessage) {
 }
 
 export function saveBlog(title, content) {
-    console.log("called savebLog`");
     const config = {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -126,7 +124,6 @@ export function saveBlog(title, content) {
     await axios
     .post(url, getFormBody({ title, content }), config)
     .then((res) => {
-        console.log(res);
         const { message, result, success } = res.data;
         if (success) {
             dispatch(saveBlogSuccess(result));

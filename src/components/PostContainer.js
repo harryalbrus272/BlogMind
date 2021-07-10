@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { clearErrorState, clearPostSaveState } from "../actions/blogs";
 
 const PostContainer = (props) => {
-  console.log("props in post conatiner", props);
   const { dispatch, blogs } = props;
   const { list } = props.blogs;
   useEffect(() => {

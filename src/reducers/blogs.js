@@ -25,7 +25,6 @@ const initialBlogState = {
   },
 };
 const blogs = (state = initialBlogState, action) => {
-  console.log(action);
   switch (action.type) {
     case LIST_LOAD_START:
       return {

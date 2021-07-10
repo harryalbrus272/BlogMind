@@ -58,7 +58,6 @@ const CreatePosts = (props) => {
   }, []);
 
   const openConfirmModal = () => {
-    console.log(content, title);
 
     if (content === "") {
       setMessage("Content is a required field");
