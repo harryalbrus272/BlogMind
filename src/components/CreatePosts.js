@@ -16,6 +16,7 @@ import {
   Confirm,
   Popup,
   Icon,
+  Progress,
 } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
 import { clearErrorState, saveBlog } from "../actions/blogs";
@@ -32,6 +33,7 @@ const CreatePosts = (props) => {
   const [message, setMessage] = useState("Title is a required field");
   const [isContentEmpty, setIsContentEmpty] = useState(false);
   const [isTitleEmpty, setIsTitleEmpty] = useState(false);
+  const [percent, setPercent] = useState(0);
 
   const editor = useEditor({
     extensions: [
@@ -97,6 +99,13 @@ const CreatePosts = (props) => {
     setTimeout(() => {
       setRedirect(true);
     }, 1500);
+    setInterval(() => {
+      if (percent >= 100) {
+        setPercent(100);
+      } else {
+        setPercent((prev) => prev + 0.7);
+      }
+    }, 10);
   }
 
   if (redirect) return <Redirect to="/" />;
@@ -130,14 +139,14 @@ const CreatePosts = (props) => {
         <MenuBar editor={editor} />
         {editor && (
           <BubbleMenu editor={editor}>
-            <Button.Group basic size="small" style={{background: 'black'}}>
+            <Button.Group basic size="small" style={{ background: "black" }}>
               <Button
                 icon
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 className={editor.isActive("bold") ? "is-active" : ""}
                 size="mini"
-                inverted 
-                color='blue'
+                inverted
+                color="blue"
                 basic
               >
                 <Icon name="bold" />
@@ -147,8 +156,8 @@ const CreatePosts = (props) => {
                 onClick={() => editor.chain().focus().toggleItalic().run()}
                 className={editor.isActive("italic") ? "is-active" : ""}
                 size="mini"
-                inverted 
-                color='blue'
+                inverted
+                color="blue"
                 basic
               >
                 <Icon name="italic" />
@@ -158,8 +167,8 @@ const CreatePosts = (props) => {
                 onClick={() => editor.chain().focus().toggleCodeBlock().run()}
                 className={editor.isActive("codeBlock") ? "is-active" : ""}
                 size="mini"
-                inverted 
-                color='blue'
+                inverted
+                color="blue"
                 basic
               >
                 <Icon name="code" />
@@ -223,9 +232,14 @@ const CreatePosts = (props) => {
         ) : blogs.error ? (
           <div className="alert error-dailog">{blogs.error}</div>
         ) : (
-          <Message>
-            <Message.Header>Post Saved and Redirecting.....</Message.Header>
-          </Message>
+          <Container>
+            <Progress percent={percent} indicating success size="tiny" />
+            <Message>
+              <Message.Header>
+                Post Saved and Redirecting to Home Page.....
+              </Message.Header>
+            </Message>
+          </Container>
         )}
       </Container>
     </div>

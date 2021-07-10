@@ -12,12 +12,14 @@ const Posts = ({ blog }) => {
           <div
             style={{
               maxHeight: "50px",
+              maxWidth: "100%",
               textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
+              whiteSpace: "wrap",
               overflow: "hidden",
+              marginBottom: "10px"
             }}
           >
-            <Container>{ReactHtmlParser(blog.content)}</Container>
+            <Container>{ReactHtmlParser(blog.content.substring(0,200) + '.....')}</Container>
           </div>
           <Link to={`/blog/${blog._id}`}>
             <Button size="medium" style={{ color: "black" }}>
