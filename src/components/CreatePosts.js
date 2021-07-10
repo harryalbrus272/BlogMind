@@ -4,15 +4,16 @@ import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
 import TextAlign from "@tiptap/extension-text-align";
-import {Redirect} from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import {
   Container,
   Input,
   Grid,
   Button,
-  Progress,
+  Message,
   Dimmer,
   Loader,
+  Confirm,
 } from "semantic-ui-react";
 import MenuBar from "./MenuBar";
 import { saveBlog } from "../actions/blogs";
@@ -22,6 +23,8 @@ const CreatePosts = (props) => {
   const { dispatch, blogs } = props;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [redirect, setRedirect] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
   console.log({ content, title });
   const editor = useEditor({
     extensions: [
@@ -37,6 +40,11 @@ const CreatePosts = (props) => {
       setContent(editor.getHTML());
     },
   });
+
+  const openConfirmModal = () => {
+    setConfirmModal(true);
+  };
+
   const handleSubmit = (e) => {
     console.log(title !== "" && content !== "");
     if (title && content) dispatch(saveBlog(title, content));
@@ -48,7 +56,13 @@ const CreatePosts = (props) => {
     setContent("");
   };
 
-  if(blogs.postSave.started && blogs.postSave.finished) return (<Redirect to="/" />);
+  if (blogs.postSave.started && blogs.postSave.finished) {
+    setTimeout(() => {
+      setRedirect(true);
+    }, 1500);
+  }
+
+  if (redirect) return <Redirect to="/" />;
 
   if (blogs.inProgress)
     return (
@@ -93,13 +107,28 @@ const CreatePosts = (props) => {
             }}
           />
         </Grid>
-        <Button.Group>
-          <Button onClick={(e) => handleReset(e)}>Reset</Button>
-          <Button.Or />
-          <Button positive onClick={(e) => handleSubmit(e)}>
-            Create Post
-          </Button>
-        </Button.Group>
+        {!blogs.postSave.started && !blogs.postSave.finished ? (
+          <Button.Group>
+            <Button onClick={(e) => handleReset(e)}>Reset</Button>
+            <Button.Or />
+            <Button
+              positive
+              onClick={(e) => openConfirmModal(e)}
+              disabled={blogs.inProgress}
+            >
+              Create Post
+            </Button>
+            <Confirm
+              open={confirmModal}
+              onCancel={() => setConfirmModal(false)}
+              onConfirm={(e) => handleSubmit(e)}
+            />
+          </Button.Group>
+        ) : (
+          <Message>
+            <Message.Header>Post Saved and Redirecting.....</Message.Header>
+          </Message>
+        )}
       </Container>
     </div>
   );

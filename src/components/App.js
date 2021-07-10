@@ -21,7 +21,7 @@ function App(props) {
           <Navbar />
           <Divider />
           <Switch>
-            <Route exact path="/">{(props) => <PostContainer {...props} blogs={blogs} />}</Route>
+            <Route exact path="/">{(props) => <PostContainer {...props} blogs={blogs} dispatch={dispatch} />}</Route>
             <Route exact path="/blog/:id" component={PostView} />
             <Route exact path="/create" component={CreatePosts} />
             <PostContainer />

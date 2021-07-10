@@ -5,6 +5,8 @@ import {
   BLOG_LOAD_FAILED,
   BLOG_LOAD_START,
   BLOG_LOAD_SUCCESS,
+  CLEAR_ERROR_STATE,
+  CLEAR_POST_SAVE,
   CREATE_POST_FAILED,
   CREATE_POST_START,
   CREATE_POST_SUCCESS,
@@ -112,26 +114,38 @@ export function saveBlogFailed(errorMessage) {
 }
 
 export function saveBlog(title, content) {
-  console.log("called savebLog`");
-  const config = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  };
-  return async (dispatch) => {
-    const url = APIUrls.save();
-    dispatch(saveBlogStart());
+    console.log("called savebLog`");
+    const config = {
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+    };
+    return async (dispatch) => {
+        const url = APIUrls.save();
+        dispatch(saveBlogStart());
     await axios
-      .post(url, getFormBody({ title, content }), config)
-      .then((res) => {
+    .post(url, getFormBody({ title, content }), config)
+    .then((res) => {
         console.log(res);
         const { message, result, success } = res.data;
         if (success) {
-          dispatch(saveBlogSuccess(result));
+            dispatch(saveBlogSuccess(result));
         }
-      })
+    })
       .catch((err) => {
-        dispatch(saveBlogFailed(err.response.data.message));
-      });
+          dispatch(saveBlogFailed(err.response.data.message));
+        });
+    };
+}
+
+export function clearErrorState() {
+  return {
+    type: CLEAR_ERROR_STATE,
+  };
+}
+
+export function clearPostSaveState() {
+  return {
+    type: CLEAR_POST_SAVE,
   };
 }

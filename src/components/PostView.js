@@ -1,16 +1,14 @@
 import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchBlog } from "../actions/blogs";
+import {
+  clearErrorState,
+  clearPostSaveState,
+  fetchBlog,
+} from "../actions/blogs";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import {
-  Container,
-  Header,
-  Image,
-  Loader,
-  Dimmer,
-} from "semantic-ui-react";
+import { Container, Header, Image, Loader, Dimmer } from "semantic-ui-react";
 
 const PostView = (props) => {
   const { dispatch, blogs } = props;
@@ -25,6 +23,10 @@ const PostView = (props) => {
 
   useEffect(() => {
     dispatch(fetchBlog(params.id));
+    return () => {
+      dispatch(clearErrorState());
+      dispatch(clearPostSaveState());
+    };
   }, []);
 
   useEffect(() => {
