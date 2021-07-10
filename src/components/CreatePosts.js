@@ -24,6 +24,7 @@ const CreatePosts = (props) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [editorEditable, setEditorEditable] = useState(true);
   const [confirmModal, setConfirmModal] = useState(false);
   console.log({ content, title });
   const editor = useEditor({
@@ -36,6 +37,7 @@ const CreatePosts = (props) => {
       }),
     ],
     content: content,
+    editable: editorEditable,
     onUpdate({ editor }) {
       setContent(editor.getHTML());
     },
@@ -47,7 +49,10 @@ const CreatePosts = (props) => {
 
   const handleSubmit = (e) => {
     console.log(title !== "" && content !== "");
-    if (title && content) dispatch(saveBlog(title, content));
+    if (title && content) {
+      dispatch(saveBlog(title, content));
+      setEditorEditable(false);
+    }
   };
 
   const handleReset = (e) => {
@@ -124,6 +129,8 @@ const CreatePosts = (props) => {
               onConfirm={(e) => handleSubmit(e)}
             />
           </Button.Group>
+        ) : blogs.error ? (
+          <div className="alert error-dailog">{blogs.error}</div>
         ) : (
           <Message>
             <Message.Header>Post Saved and Redirecting.....</Message.Header>
