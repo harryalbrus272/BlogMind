@@ -1,3 +1,5 @@
+If runnning locally - Adjust the base URL in the helpers -> urls file and set the port to the port of the Node server(backend).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
