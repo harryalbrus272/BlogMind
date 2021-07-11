@@ -18,7 +18,7 @@ function App(props) {
     <div className="App">
       <Router>
         <Container fluid>
-          <Navbar />
+          <Navbar {...props} />
           <Divider />
           <Switch>
             <Route exact path="/">{(props) => <PostContainer {...props} blogs={blogs} dispatch={dispatch} />}</Route>

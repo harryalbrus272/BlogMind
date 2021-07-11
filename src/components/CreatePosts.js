@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
@@ -33,6 +33,27 @@ const CreatePosts = (props) => {
   const [isContentEmpty, setIsContentEmpty] = useState(false);
   const [isTitleEmpty, setIsTitleEmpty] = useState(false);
   const [percent, setPercent] = useState(0);
+
+  useEffect(() => {
+    let timeout, interval;
+    //Showing the redirect message and the green bar progress to make the point that redirect is going to happen soon
+    if (blogs.postSave.started && blogs.postSave.finished) {
+      timeout = setTimeout(() => {
+        setRedirect(true);
+      }, 1500);
+      interval = setInterval(() => {
+        if (percent >= 100) {
+          setPercent(100);
+        } else {
+          setPercent((prev) => prev + 0.67);
+        }
+      }, 10);
+    }
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [blogs]);
 
   //Editor instance initialized with the update function to render again when the change is made by the user
   const editor = useEditor({
@@ -89,20 +110,6 @@ const CreatePosts = (props) => {
     editor.commands.focus();
     setContent("");
   };
-
-  //Showing the redirect message and the green bar progress to make the point that redirect is going to happen soon
-  if (blogs.postSave.started && blogs.postSave.finished) {
-    setTimeout(() => {
-      setRedirect(true);
-    }, 1500);
-    setInterval(() => {
-      if (percent >= 100) {
-        setPercent(100);
-      } else {
-        setPercent((prev) => prev + 0.67);
-      }
-    }, 10);
-  }
 
   //Redirect if the redirect state is true
   if (redirect) return <Redirect to="/" />;
